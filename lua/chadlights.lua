@@ -1,5 +1,3 @@
-local ui = require("base46").ui
-
 local merge_tb = require("base46").merge_tb
 
 local highlights = {}
@@ -24,8 +22,8 @@ if polish_hl then
 end
 
 -- override user highlights if there are any
-if ui.hl_override then
-   local user_highlights = ui.hl_override
+if vim.g.base46_ui.hl_override then
+   local user_highlights = vim.g.base46_ui.hl_override
    local colors = require("base46").get_colors "base_30"
 
    -- fg = "white" set by user becomes fg = colors["white"]
@@ -46,8 +44,8 @@ if ui.hl_override then
    highlights = merge_tb(highlights, user_highlights)
 end
 
--- local set_transparent = nvchad.load_config().ui.transparency
-if ui.transparency then
+-- local set_transparent = nvchad.load_config().vim.g.base46_ui.transparency
+if vim.g.base46_ui.transparency then
    highlights = merge_tb(highlights, require "nv_glassy")
 end
 
