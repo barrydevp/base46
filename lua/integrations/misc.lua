@@ -140,10 +140,10 @@ return {
       sp = "none",
    },
 
-   CursorLine = {
-      bg = theme.base00,
-      sp = "none",
-   },
+   -- CursorLine = {
+   --    bg = theme.base00,
+   --    sp = "none",
+   -- },
 
    CursorLineNr = {
       bg = theme.base00,
