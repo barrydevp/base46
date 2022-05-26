@@ -32,6 +32,7 @@ end
 M.load_theme = function(theme)
    -- set bg option
    vim.g.base46_ui.theme = theme
+   print(theme)
    print(vim.g.base46_ui.theme)
    local theme_type = M.get_theme_tb(vim.g.base46_ui.theme, "type") -- dark/light
    vim.opt.bg = theme_type
