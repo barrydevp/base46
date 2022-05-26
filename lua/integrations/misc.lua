@@ -92,7 +92,7 @@ return {
 
    Visual = {
       -- bg = theme.base03,
-      bg = "#1E4273",
+      bg = "#444C56",
    },
 
    VisualNOS = {
