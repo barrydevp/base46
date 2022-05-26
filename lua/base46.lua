@@ -4,7 +4,7 @@ vim.g.base46_ui = {
    hl_override = {},
    changed_themes = {},
    theme_toggle = { "onedark", "one_light" },
-   theme = "onedark", -- default theme
+   theme = "rxyhn", -- default theme
    transparency = false,
 }
 
@@ -31,9 +31,7 @@ end
 
 M.load_theme = function(theme)
    -- set bg option
-   vim.g.base46_ui["theme"] = "rxyhn"
-   print(theme)
-   print(vim.g.base46_ui.theme)
+   vim.g.base46_ui["theme"] = theme
    local theme_type = M.get_theme_tb(vim.g.base46_ui.theme, "type") -- dark/light
    vim.opt.bg = theme_type
 
