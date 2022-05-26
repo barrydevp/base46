@@ -31,7 +31,7 @@ end
 
 M.load_theme = function(theme)
    -- set bg option
-   M.ui["theme"] = theme
+   M.ui.theme = theme
    local theme_type = M.get_theme_tb(M.ui.theme, "type") -- dark/light
    vim.opt.bg = theme_type
 
