@@ -39,7 +39,7 @@ return {
 
    Folded = {
       fg = theme.base04,
-      bg = theme.base01,
+      bg = theme.base07,
    },
 
    IncSearch = {
@@ -141,7 +141,7 @@ return {
    },
 
    CursorLine = {
-      bg = theme.base03,
+      bg = theme.base02,
       sp = "none",
    },
 
