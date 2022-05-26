@@ -38,8 +38,8 @@ return {
    },
 
    Folded = {
-      fg = theme.base04,
-      bg = theme.base07,
+      fg = theme.base07,
+      bg = theme.base01,
    },
 
    IncSearch = {
