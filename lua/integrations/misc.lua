@@ -91,7 +91,7 @@ return {
    },
 
    Visual = {
-      bg = theme.base03,
+      bg = theme.base02,
    },
 
    VisualNOS = {
@@ -141,7 +141,7 @@ return {
    },
 
    CursorLine = {
-      bg = theme.base02,
+      bg = theme.base01,
       sp = "none",
    },
 
