@@ -1,8 +1,7 @@
 local M = {}
 
 M.base_30 = {
-   -- white = "#D9D7D6",
-   white = "#000a0e",
+   white = "#D9D7D6",
    darker_black = "#000a0e",
    black = "#061115", --  nvim bg
    black2 = "#0d181c",
@@ -41,7 +40,8 @@ M.base_16 = {
    base02 = "#101B1F",
    base03 = "#192428",
    base04 = "#212C30",
-   base05 = "#D9D7D6",
+   base05 = "#212C30",
+   -- base05 = "#D9D7D6",
    base06 = "#E3E1E0",
    base07 = "#EDEBEA",
    base08 = "#f26e74",
