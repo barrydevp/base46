@@ -38,7 +38,7 @@ return {
    },
 
    Folded = {
-      fg = theme.base03,
+      fg = theme.base04,
       bg = theme.base01,
    },
 
@@ -91,7 +91,7 @@ return {
    },
 
    Visual = {
-      bg = theme.base02,
+      bg = theme.base03,
    },
 
    VisualNOS = {
@@ -141,7 +141,7 @@ return {
    },
 
    CursorLine = {
-      bg = theme.base04,
+      bg = theme.base03,
       sp = "none",
    },
 
