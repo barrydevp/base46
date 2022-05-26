@@ -162,8 +162,8 @@ return {
    },
 
    StatusLineNC = {
-      fg = theme.base03,
-      bg = theme.base01,
+      fg = theme.base04,
+      bg = theme.base02,
    },
 
    -- spell
