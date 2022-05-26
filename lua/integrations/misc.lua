@@ -141,7 +141,7 @@ return {
    },
 
    CursorLine = {
-      bg = theme.base01,
+      bg = theme.base04,
       sp = "none",
    },
 
