@@ -161,6 +161,11 @@ return {
       sp = "none",
    },
 
+   StatusLineNC = {
+      bg = "NONE",
+      sp = "none",
+   },
+
    -- spell
 
    SpellBad = {
