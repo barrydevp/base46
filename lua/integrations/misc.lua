@@ -2,9 +2,8 @@ local theme = require("base46").get_colors "base_16"
 
 return {
    Normal = {
-      -- fg = theme.base05,
-      fg = theme.base00,
-      -- bg = theme.base00,
+      fg = theme.base05,
+      bg = theme.base00,
    },
 
    Bold = {
