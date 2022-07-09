@@ -6,7 +6,7 @@
 
 ## Contribute for new themes 
 
-- go to hl_themes and add your file, ex: atheme.lua
+- go to base46/themes and add your file, ex: atheme.lua
 ```lua
 -- atheme.lua file be like 
 
@@ -20,7 +20,7 @@ M.base_16 = {
   -- some colors 
 }
 
-M.type = "dark" -- this can be either dark or light
+vim.opt.bg = "dark" -- this can be either dark or light
 
 M = require("base46").override_theme(M, "atheme")
 
