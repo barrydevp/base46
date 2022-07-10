@@ -31,6 +31,23 @@ return {
       fg = colors.red,
    },
 
+   DiffText = {
+      fg = colors.purple,
+   },
+
+   GitSignsAdd = {
+      fg = colors.green,
+   },
+   GitSignsChange = {
+      fg = colors.blue,
+   },
+   GitSignsDelete = {
+      fg = colors.red,
+   },
+   GitSignsChangeDelete = {
+      fg = colors.purple,
+   },
+
    -- git commits
    gitcommitOverflow = {
       fg = theme.base08,
