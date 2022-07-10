@@ -4,7 +4,7 @@ local colors = require("base46").get_theme_tb "base_30"
 return {
 
    DiffAdd = {
-      fg = colors.blue,
+      fg = colors.green,
    },
 
    DiffAdded = {
@@ -12,7 +12,7 @@ return {
    },
 
    DiffChange = {
-      fg = colors.light_grey,
+      fg = colors.blue,
    },
 
    DiffChangeDelete = {
