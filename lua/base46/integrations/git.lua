@@ -4,47 +4,42 @@ local colors = require("base46").get_theme_tb "base_30"
 return {
 
    DiffAdd = {
+      bold = true,
       fg = colors.green,
    },
 
    DiffAdded = {
+      bold = true,
       fg = colors.green,
    },
 
    DiffChange = {
+      bold = true,
       fg = colors.blue,
    },
 
    DiffChangeDelete = {
+      bold = true,
       fg = colors.red,
    },
 
    DiffModified = {
+      bold = true,
       fg = colors.orange,
    },
 
    DiffDelete = {
+      bold = true,
       fg = colors.red,
    },
 
    DiffRemoved = {
+      bold = true,
       fg = colors.red,
    },
 
    DiffText = {
-      fg = colors.purple,
-   },
-
-   GitSignsAdd = {
-      fg = colors.green,
-   },
-   GitSignsChange = {
-      fg = colors.blue,
-   },
-   GitSignsDelete = {
-      fg = colors.red,
-   },
-   GitSignsChangeDelete = {
+      bold = true,
       fg = colors.purple,
    },
 
