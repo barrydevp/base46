@@ -104,10 +104,10 @@ M.load_highlight = function(group)
 end
 
 M.load_theme = function()
+  M.load_highlight "defaults"
+  M.load_highlight "statusline"
+  M.load_highlight "syntax"
   M.load_all_highlights()
-  -- M.load_highlight "defaults"
-  -- M.load_highlight "statusline"
-  -- M.load_highlight "syntax"
   M.load_highlight(M.turn_str_to_color(M.ui.hl_add))
 end
 
