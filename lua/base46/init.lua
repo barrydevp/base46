@@ -3,6 +3,8 @@ local g = vim.g
 -- local config = require("core.utils").load_config()
 
 M.ui = {
+  -- hl = highlights
+  hl_add = {},
   hl_override = {},
   changed_themes = {},
   theme_toggle = { "onedark", "one_light" },
