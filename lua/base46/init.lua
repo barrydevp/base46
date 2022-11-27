@@ -1,4 +1,6 @@
 local M = {}
+local g = vim.g
+-- local config = require("core.utils").load_config()
 
 M.ui = {
   hl_override = {},
@@ -21,54 +23,92 @@ M.get_theme_tb = function(type)
   end
 end
 
-M.get_colors = function(type)
-  return M.get_theme_tb(type)
-end
-
 M.merge_tb = function(table1, table2)
   return vim.tbl_deep_extend("force", table1, table2)
 end
 
---  credits to https://github.com/max397574 for this function
-M.clear_highlights = function(hl_group)
-  local highlights_raw = vim.split(vim.api.nvim_exec("filter " .. hl_group .. " hi", true), "\n")
-  local highlight_groups = {}
+M.load_all_highlights = function()
+  vim.opt.bg = require("base46").get_theme_tb "type" -- dark/light
 
-  for _, raw_hi in ipairs(highlights_raw) do
-    table.insert(highlight_groups, string.match(raw_hi, hl_group .. "%a+"))
-  end
+  -- reload highlights for theme switcher
+  local reload = require("plenary.reload").reload_module
 
-  for _, highlight in ipairs(highlight_groups) do
-    vim.cmd([[hi clear ]] .. highlight)
+  reload "base46.integrations"
+  reload "base46.chadlights"
+
+  local hl_groups = require "base46.chadlights"
+
+  for hl, col in pairs(hl_groups) do
+    vim.api.nvim_set_hl(0, hl, col)
   end
 end
 
-M.load_theme = function(theme)
-  -- set bg option
-  M.ui.theme = theme
-  local theme_type = M.get_theme_tb "type" -- dark/light
-  vim.opt.bg = theme_type
+M.turn_str_to_color = function(tb_in)
+  local tb = vim.deepcopy(tb_in)
+  local colors = M.get_theme_tb "base_30"
 
-  -- clear highlights of bufferline (cuz of dynamic devicons hl group on the buffer)
-  local highlights_raw = vim.split(vim.api.nvim_exec("filter BufferLine hi", true), "\n")
-  local highlight_groups = {}
-  M.clear_highlights "BufferLine"
-  M.clear_highlights "TS"
-
-  for _, raw_hi in ipairs(highlights_raw) do
-    table.insert(highlight_groups, string.match(raw_hi, "BufferLine%a+"))
+  for _, groups in pairs(tb) do
+    for k, v in pairs(groups) do
+      if k == "fg" or k == "bg" then
+        if v:sub(1, 1) == "#" or v == "none" or v == "NONE" then
+        else
+          groups[k] = colors[v]
+        end
+      end
+    end
   end
 
-  for _, highlight in ipairs(highlight_groups) do
-    vim.cmd([[hi clear ]] .. highlight)
+  return tb
+end
+
+M.extend_default_hl = function(highlights)
+  local glassy = require "base46.glassy"
+  local polish_hl = M.get_theme_tb "polish_hl"
+
+  -- polish themes
+  if polish_hl then
+    for key, value in pairs(polish_hl) do
+      if highlights[key] then
+        highlights[key] = M.merge_tb(highlights[key], value)
+      end
+    end
   end
-  -- above highlights clear code by https://github.com/max397574
 
-  -- reload highlights for theme switcher
-  require("plenary.reload").reload_module "base46.integrations"
-  require("plenary.reload").reload_module "base46.chadlights"
+  -- transparency
+  if vim.g.transparency then
+    for key, value in pairs(glassy) do
+      if highlights[key] then
+        highlights[key] = M.merge_tb(highlights[key], value)
+      end
+    end
+  end
 
-  require "base46.chadlights"
+  local overriden_hl = M.turn_str_to_color(M.ui.hl_override)
+
+  for key, value in pairs(overriden_hl) do
+    if highlights[key] then
+      highlights[key] = M.merge_tb(highlights[key], value)
+    end
+  end
+end
+
+M.load_highlight = function(group)
+  if type(group) == "string" then
+    group = require("base46.integrations." .. group)
+    M.extend_default_hl(group)
+  end
+
+  for hl, col in pairs(group) do
+    vim.api.nvim_set_hl(0, hl, col)
+  end
+end
+
+M.load_theme = function()
+  M.load_all_highlights()
+  -- M.load_highlight "defaults"
+  -- M.load_highlight "statusline"
+  -- M.load_highlight "syntax"
+  M.load_highlight(M.turn_str_to_color(M.ui.hl_add))
 end
 
 M.override_theme = function(default_theme, theme_name)
@@ -79,6 +119,63 @@ M.override_theme = function(default_theme, theme_name)
   else
     return default_theme
   end
+end
+
+-- FIXME
+M.toggle_theme = function()
+  local themes = M.ui.theme_toggle
+
+  local theme1 = themes[1]
+  local theme2 = themes[2]
+
+  if g.nvchad_theme == theme1 or g.nvchad_theme == theme2 then
+    if g.toggle_theme_icon == "   " then
+      g.toggle_theme_icon = "   "
+    else
+      g.toggle_theme_icon = "   "
+    end
+  end
+
+  if g.nvchad_theme == theme1 then
+    g.nvchad_theme = theme2
+
+    require("nvchad").reload_theme()
+    require("nvchad").change_theme(theme1, theme2)
+  elseif g.nvchad_theme == theme2 then
+    g.nvchad_theme = theme1
+
+    require("nvchad").reload_theme()
+    require("nvchad").change_theme(theme2, theme1)
+  else
+    vim.notify "Set your current theme to one of those mentioned in the theme_toggle table (chadrc)"
+  end
+end
+
+-- FIXME
+M.toggle_transparency = function()
+  local transparency_status = M.ui.transparency
+  local write_data = require("nvchad").write_data
+
+  local function save_chadrc_data()
+    local old_data = "transparency = " .. tostring(transparency_status)
+    local new_data = "transparency = " .. tostring(g.transparency)
+
+    write_data(old_data, new_data)
+  end
+
+  if g.transparency then
+    g.transparency = false
+    M.load_all_highlights()
+    save_chadrc_data()
+  else
+    g.transparency = true
+    M.load_all_highlights()
+    save_chadrc_data()
+  end
+end
+
+M.setup = function(ui)
+  M.ui = M.merge_tb(M.ui, ui)
 end
 
 return M
