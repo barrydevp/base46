@@ -33,5 +33,6 @@ return {
   DevIconTSX = {fg = colors.blue},
   DevIconJSX = {fg = colors.blue},
   DevIconSvelte = {fg = colors.red},
-  DevIconJava = {fg = colors.orange}
+  DevIconJava = {fg = colors.orange},
+  DevIconDart = {fg = colors.cyan}
 }

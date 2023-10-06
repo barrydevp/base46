@@ -23,6 +23,8 @@ M.merge_tb = function(...)
   return vim.tbl_deep_extend("force", ...)
 end
 
+local change_hex_lightness = require("base46.colors").change_hex_lightness
+
 -- turns color var names in hl_override/hl_add to actual colors
 -- hl_add = { abc = { bg = "one_bg" }} -> bg = colors.one_bg
 M.turn_str_to_color = function(tb)
@@ -31,10 +33,10 @@ M.turn_str_to_color = function(tb)
 
   for _, hlgroups in pairs(copy) do
     for opt, val in pairs(hlgroups) do
-      if
-        (opt == "fg" or opt == "bg" or opt == "sp") and not (val:sub(1, 1) == "#" or val == "none" or val == "NONE")
-      then
-        hlgroups[opt] = colors[val]
+      if opt == "fg" or opt == "bg" or opt == "sp" then
+        if not (type(val) == "string" and val:sub(1, 1) == "#" or val == "none" or val == "NONE") then
+          hlgroups[opt] = type(val) == "table" and change_hex_lightness(colors[val[1]], val[2]) or colors[val]
+        end
       end
     end
   end
@@ -44,12 +46,22 @@ end
 
 M.extend_default_hl = function(highlights)
   local polish_hl = M.get_theme_tb "polish_hl"
+  local add_hl = M.get_theme_tb "add_hl"
 
   -- polish themes
   if polish_hl then
     for key, value in pairs(polish_hl) do
       if highlights[key] then
         highlights[key] = M.merge_tb(highlights[key], value)
+      end
+    end
+  end
+
+  -- add new hl
+  if add_hl then
+    for key, value in pairs(add_hl) do
+      if not highlights[key] and type(value) == "table" then
+        highlights[key] = value
       end
     end
   end
@@ -76,8 +88,9 @@ M.extend_default_hl = function(highlights)
   end
 end
 
-M.load_highlight = function(group)
-  group = require("base46.integrations." .. group)
+M.load_highlight = function(group, is_extended)
+  local str = is_extended and "extended_" or ""
+  group = require("base46." .. str .. "integrations." .. group)
   M.extend_default_hl(group)
   return group
 end
@@ -138,8 +151,8 @@ M.compile = function()
   local extended_integrations = config.ui.extended_integrations
 
   if extended_integrations then
-    for _, integration in ipairs(extended_integrations) do
-      M.saveStr_to_cache(integration, require("base46.extended_integrations." .. integration))
+    for _, filename in ipairs(extended_integrations) do
+      M.saveStr_to_cache(filename, M.load_highlight(filename, true))
     end
   end
 end

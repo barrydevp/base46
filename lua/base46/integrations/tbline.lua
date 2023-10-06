@@ -1,6 +1,8 @@
 local colors = require("base46").get_theme_tb "base_30"
 
-return {
+local config = require("core.utils").load_config().ui
+
+local highlights = {
 
   TblineFill = {
     bg = colors.black2,
@@ -21,7 +23,7 @@ return {
     bg = colors.black,
   },
 
-  TbBufLineBufOffModified = {
+  TbLineBufOffModified = {
     fg = colors.red,
     bg = colors.black2,
   },
@@ -75,3 +77,21 @@ return {
     fg = colors.black,
   },
 }
+
+local hlgroups_glassy = {
+  "TblineFill",
+  "TbLineBufOn",
+  "TbLineBufOff",
+  "TbLineBufOnClose",
+  "TbLineBufOffClose",
+  "TbLineBufOnModified",
+  "TbLineBufOffModified"
+}
+
+if config.transparency then
+  for _, val in ipairs(hlgroups_glassy) do
+    highlights[val].bg = "NONE"
+  end
+end
+
+return highlights

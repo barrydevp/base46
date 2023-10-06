@@ -68,6 +68,8 @@ local defaults = {
     fg = theme.base03,
     -- bg = theme.base01,
     bg = "#2f2945",
+    -- fg = colors.light_grey,
+    -- bg = colors.black2,
   },
 
   IncSearch = {
