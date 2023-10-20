@@ -4,8 +4,8 @@ local config = require("core.utils").load_config()
 local base46_path = vim.fn.fnamemodify(debug.getinfo(1, "S").source:sub(2), ":p:h")
 
 M.get_theme_tb = function(type)
-  local default_path = "base46.themes." .. g.base46_theme
-  local user_path = "custom.themes." .. g.base46_theme
+  local default_path = "base46.themes." .. g.nvchad_theme
+  local user_path = "custom.themes." .. g.nvchad_theme
 
   local present1, default_theme = pcall(require, default_path)
   local present2, user_theme = pcall(require, user_path)
@@ -176,19 +176,19 @@ M.toggle_theme = function()
   local theme1 = themes[1]
   local theme2 = themes[2]
 
-  if g.base46_theme ~= theme1 and g.base46_theme ~= theme2 then
+  if g.nvchad_theme ~= theme1 and g.nvchad_theme ~= theme2 then
     vim.notify "Set your current theme to one of those mentioned in the theme_toggle table (chadrc)"
     return
   end
 
-  if g.base46_theme == theme1 then
+  if g.nvchad_theme == theme1 then
     g.toggle_theme_icon = "   "
-    vim.g.base46_theme = theme2
-    -- require("nvchad").replace_word('theme = "' .. theme1, 'theme = "' .. theme2)
+    vim.g.nvchad_theme = theme2
+    require("nvchad.utils").replace_word('theme = "' .. theme1, 'theme = "' .. theme2)
   else
-    vim.g.base46_theme = theme1
+    vim.g.nvchad_theme = theme1
     g.toggle_theme_icon = "   "
-    -- require("nvchad").replace_word('theme = "' .. theme2, 'theme = "' .. theme1)
+    require("nvchad.utils").replace_word('theme = "' .. theme2, 'theme = "' .. theme1)
   end
 
   M.load_all_highlights()
@@ -202,7 +202,7 @@ M.toggle_transparency = function()
   local old_data = "transparency = " .. tostring(config.ui.transparency)
   local new_data = "transparency = " .. tostring(g.transparency)
 
-  -- require("nvchad").replace_word(old_data, new_data)
+  require("nvchad.utils").replace_word(old_data, new_data)
 end
 
 return M
