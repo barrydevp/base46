@@ -20,9 +20,7 @@ local defaults = {
 
   CursorLineNr = { fg = colors.white },
   -- LineNr = { fg = colors.grey },
-  LineNr = { fg = colors.pink },
-  LineNrAbove = { fg = colors.yellow },
-  LineNrBelow = { fg = colors.yellow },
+  LineNr = { fg = colors.white },
 
   -- floating windows
   FloatBorder = { fg = colors.blue },
