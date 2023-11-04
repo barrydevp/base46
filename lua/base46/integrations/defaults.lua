@@ -20,7 +20,7 @@ local defaults = {
 
   CursorLineNr = { fg = colors.white },
   -- LineNr = { fg = colors.grey },
-  LineNr = { fg = colors.sun },
+  LineNr = { fg = "#b6bbc1" },
   -- LineNrAbove = { fg = colors. },
   -- LineNrBelow = { fg = colors.yellow },
 
