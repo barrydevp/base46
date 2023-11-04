@@ -19,7 +19,10 @@ local defaults = {
   Comment = { fg = colors.grey_fg },
 
   CursorLineNr = { fg = colors.white },
-  LineNr = { fg = colors.grey },
+  -- LineNr = { fg = colors.grey },
+  LineNr = { fg = colors.pink },
+  LineNrAbove = { fg = colors.yellow },
+  LineNrBelow = { fg = colors.yellow },
 
   -- floating windows
   FloatBorder = { fg = colors.blue },
@@ -65,11 +68,11 @@ local defaults = {
   },
 
   Folded = {
-    fg = theme.base03,
+    -- fg = theme.base03,
     -- bg = theme.base01,
-    bg = "#2f2945",
-    -- fg = colors.light_grey,
-    -- bg = colors.black2,
+    -- bg = "#2f2945",
+    fg = colors.light_grey,
+    bg = colors.black2,
   },
 
   IncSearch = {
