@@ -1,4 +1,4 @@
-local theme = require("nvconfig").ui.statusline.theme
+local theme = require("core.utils").load_config().ui.statusline.theme
 
 if theme == "custom" then
   return {}
