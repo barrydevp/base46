@@ -1,6 +1,6 @@
 local M = {}
 local g = vim.g
-local config = require "nvconfig"
+local config = require("core.utils").load_config()
 
 M.get_theme_tb = function(type)
   local default_path = "base46.themes." .. config.ui.theme
@@ -43,12 +43,26 @@ M.turn_str_to_color = function(tb)
   return copy
 end
 
-M.extend_default_hl = function(highlights, integration_name)
+M.extend_default_hl = function(highlights)
   local polish_hl = M.get_theme_tb "polish_hl"
+  local add_hl = M.get_theme_tb "add_hl"
 
   -- polish themes
-  if polish_hl and polish_hl[integration_name] then
-    highlights = M.merge_tb(highlights, polish_hl[integration_name])
+  if polish_hl then
+    for key, value in pairs(polish_hl) do
+      if highlights[key] then
+        highlights[key] = M.merge_tb(highlights[key], value)
+      end
+    end
+  end
+
+  -- add new hl
+  if add_hl then
+    for key, value in pairs(add_hl) do
+      if not highlights[key] and type(value) == "table" then
+        highlights[key] = value
+      end
+    end
   end
 
   -- transparency
@@ -75,9 +89,11 @@ M.extend_default_hl = function(highlights, integration_name)
   return highlights
 end
 
-M.load_integrationTB = function(name)
-  local highlights = require("base46.integrations." .. name)
-  return M.extend_default_hl(highlights, name)
+M.load_highlight = function(group, is_extended)
+  local str = is_extended and "extended_" or ""
+  group = require("base46." .. str .. "integrations." .. group)
+  M.extend_default_hl(group)
+  return group
 end
 
 -- convert table into string
@@ -121,8 +137,24 @@ M.compile = function()
     vim.fn.mkdir(vim.g.base46_cache, "p")
   end
 
-  for _, filename in ipairs(config.base46.integrations) do
-    M.saveStr_to_cache(filename, M.load_integrationTB(filename))
+  -- All integration modules, each file returns a table
+  local hl_files = base46_path .. "/integrations"
+
+  for _, file in ipairs(vim.fn.readdir(hl_files)) do
+    -- skip caching some files
+    if file ~= "statusline" or file ~= "treesitter" then
+      local filename = vim.fn.fnamemodify(file, ":r")
+      M.saveStr_to_cache(filename, M.load_highlight(filename))
+    end
+  end
+
+  -- look for custom cached highlight files
+  local extended_integrations = config.ui.extended_integrations
+
+  if extended_integrations then
+    for _, filename in ipairs(extended_integrations) do
+      M.saveStr_to_cache(filename, M.load_highlight(filename, true))
+    end
   end
 end
 
@@ -130,8 +162,8 @@ M.load_all_highlights = function()
   require("plenary.reload").reload_module "base46"
   M.compile()
 
-  for _, filename in ipairs(config.base46.integrations) do
-    dofile(vim.g.base46_cache .. filename)
+  for _, file in ipairs(vim.fn.readdir(vim.g.base46_cache)) do
+    dofile(vim.g.base46_cache .. file)
   end
 
   -- update blankline
@@ -156,20 +188,22 @@ M.toggle_theme = function()
   g.icon_toggled = not g.icon_toggled
   g.toggle_theme_icon = g.icon_toggled and "   " or "   "
 
+  local old_theme = config.ui.theme
   config.ui.theme = (themes[1] == config.ui.theme and themes[2]) or themes[1]
 
-  local old_theme = dofile(vim.fn.stdpath "config" .. "/lua/custom/chadrc.lua").ui.theme
-  require("nvchad.utils").replace_word(old_theme, config.ui.theme)
+  require("nvchad.utils").replace_word('theme = "' .. old_theme, 'theme = "' .. config.ui.theme)
   M.load_all_highlights()
 end
 
 M.toggle_transparency = function()
+  local old_data = "transparency = " .. tostring(config.ui.transparency)
   config.ui.transparency = not config.ui.transparency
   M.load_all_highlights()
 
-  local old_transparency_val = dofile(vim.fn.stdpath "config" .. "/lua/custom/chadrc.lua").ui.transparency
-  local new_transparency_val = "transparency = " .. tostring(config.ui.transparency)
-  require("nvchad.utils").replace_word("transparency = " .. tostring(old_transparency_val),new_transparency_val)
+  -- write transparency value to chadrc
+  local new_data = "transparency = " .. tostring(g.transparency)
+
+  require("nvchad.utils").replace_word(old_data, new_data)
 end
 
 return M
