@@ -5,4 +5,7 @@ return {
   -- IndentBlanklineSpaceChar = { fg = colors.line },
   -- IndentBlanklineContextChar = { fg = colors.grey },
   -- IndentBlanklineContextStart = { bg = colors.one_bg2 },
+  IblChar = { fg = colors.line },
+  IblScopeChar = { fg = colors.grey }, -- first indenline in scope only
+  IblScopeFirstLine = { bg = colors.one_bg2 },
 }

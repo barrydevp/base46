@@ -96,12 +96,20 @@ M.base_16 = {
 }
 
 -- OPTIONAL
--- overriding highlights for this specific theme only 
+-- overriding or adding highlights for this specific theme only 
+-- defaults/treesitter is the filename i.e integration there, 
+
 M.polish_hl = {
-  Comment = {
-    bg = "#ffffff" -- or M.base_30.cyan 
-    italic =  true
-  }
+  defaults = {
+    Comment = {
+      bg = "#ffffff", -- or M.base_30.cyan
+      italic = true,
+    },
+  },
+
+  treesitter = {
+    ["@variable"] = { fg = "#000000" },
+  },
 }
 
 -- set the theme type whether is dark or light

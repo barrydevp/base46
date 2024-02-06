@@ -10,5 +10,5 @@ return {
   nvUpdaterProgressFAIL = { fg = colors.red, bg = colors.one_bg2 },
 
   nvUpdaterCommits = { fg = colors.green },
-  nvUpdaterFAIL = { fg = colors.red},
+  nvUpdaterFAIL = { fg = colors.red },
 }
