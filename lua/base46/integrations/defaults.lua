@@ -14,6 +14,8 @@ local defaults = {
   PmenuSel = { bg = colors.pmenu_bg, fg = colors.black },
   PmenuThumb = { bg = colors.grey },
 
+  WinBar = { bg = colors.statusline_bg },
+
   MatchParen = { link = "MatchWord" },
 
   Comment = { fg = colors.grey_fg },
