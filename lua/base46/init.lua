@@ -4,8 +4,8 @@ local config = require("core.utils").load_config()
 local base46_path = vim.fn.fnamemodify(debug.getinfo(1, "S").source:sub(2), ":p:h")
 
 M.get_theme_tb = function(type)
-  local default_path = "base46.themes." .. config.ui.theme
-  local user_path = "custom.themes." .. config.ui.theme
+  local default_path = "base46.themes." .. g.nvchad_theme or config.ui.theme
+  local user_path = "custom.themes." .. g.nvchad_theme or config.ui.theme
 
   local present1, default_theme = pcall(require, default_path)
   local present2, user_theme = pcall(require, user_path)
