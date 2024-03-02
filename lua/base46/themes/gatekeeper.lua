@@ -57,6 +57,7 @@ M.polish_hl = {
     ["@variable"] = { fg = M.base_30.orange },
     ["@variable.parameter"] = { fg = M.base_30.white },
   },
+>>>>>> 36a44bf1c712a42b46479540ee89e296c6c63cdc
 }
 
 M.type = "dark"

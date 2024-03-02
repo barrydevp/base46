@@ -58,7 +58,6 @@ M.base_16 = {
 M.type = "dark"
 
 M.polish_hl = {
-
   treesitter = {
     ["@constructor"] = { fg = M.base_30.cyan },
     ["@keyword"] = { fg = M.base_30.red },
