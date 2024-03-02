@@ -18,19 +18,14 @@ local M = {
     bold = true,
   },
 
-  St_LspStatus = {
+  St_Lsp = {
     fg = colors.nord_blue,
     bg = statusline_bg,
   },
 
-  St_LspProgress = {
+  St_LspMsg = {
     fg = colors.green,
     bg = statusline_bg,
-  },
-
-  St_LspStatus_Icon = {
-    fg = colors.black,
-    bg = colors.nord_blue,
   },
 
   St_EmptySpace = {
@@ -43,7 +38,7 @@ local M = {
     bg = statusline_bg,
   },
 
-  St_file_info = {
+  St_file = {
     bg = colors.lightbg,
     fg = colors.white,
   },

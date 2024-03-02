@@ -26,33 +26,24 @@ local M = {
   St_lspError = {
     fg = colors.red,
     bg = statusline_bg,
-    bold = true,
   },
 
   St_lspWarning = {
     fg = colors.yellow,
     bg = statusline_bg,
-    bold = true,
   },
 
   St_LspHints = {
     fg = colors.purple,
     bg = statusline_bg,
-    bold = true,
   },
 
-  St_LspInfo = {
-    fg = colors.green,
-    bg = statusline_bg,
-    bold = true,
-  },
-
-  St_LspStatus = {
+  St_Lsp = {
     fg = colors.green,
     bg = statusline_bg,
   },
 
-  St_LspProgress = {
+  St_LspMsg = {
     fg = colors.red,
     bg = statusline_bg,
   },
@@ -60,11 +51,6 @@ local M = {
   St_cwd = {
     fg = colors.red,
     bg = colors.one_bg3,
-  },
-
-  St_encode = {
-    fg = colors.orange,
-    bg = statusline_bg,
   },
 
   St_ft = {

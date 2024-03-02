@@ -36,14 +36,12 @@ local M = {
     bg = "none",
   },
 
-  St_LspProgress = {
+  St_LspMsg = {
     fg = colors.green,
-    bg = "none",
   },
 
-  St_LspStatus_Icon = {
-    fg = colors.black,
-    bg = colors.nord_blue,
+  St_Lsp = {
+    fg = colors.green,
   },
 
   St_EmptySpace = {
@@ -55,7 +53,7 @@ local M = {
     fg = colors.black,
   },
 
-  St_file_info = {
+  St_file = {
     fg = colors.white,
     bg = "none",
   },
@@ -72,9 +70,9 @@ local M = {
 }
 
 local function genModes_hl(modename, col)
-  M["St_" .. modename .. "Mode"] = { fg = colors.black, bg = colors[col], bold = true }
-  M["St_" .. modename .. "ModeSep"] = { fg = colors[col], bg = colors.black, bold = true }
-  M["St_" .. modename .. "modeText"] = { fg = colors[col], bg = colors.one_bg, bold = true }
+  M["St_" .. modename .. "Mode"] = { fg = colors.black, bg = colors[col] }
+  M["St_" .. modename .. "ModeSep"] = { fg = colors[col], bg = colors.black }
+  M["St_" .. modename .. "modeText"] = { fg = colors[col], bg = colors.one_bg }
 end
 
 genModes_hl("Normal", "blue")

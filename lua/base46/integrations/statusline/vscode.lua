@@ -19,7 +19,7 @@ local M = {
 
   St_Mode = {
     fg = light_grey,
-    bg = colors.one_bg3,
+    bg = colors.one_bg2,
   },
 
   StText = {
